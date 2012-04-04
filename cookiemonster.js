@@ -3,7 +3,7 @@
 *@method setCookie (name,value,days)
 *@method getCookie (name)
 *@method deleteCookie(name) ;
-*author: aarong@advfn.com
+*author: Aaron Goshine
 */
 (
 "use strict";
