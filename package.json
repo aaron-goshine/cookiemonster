@@ -1,0 +1,23 @@
+{
+  "name": "cookiemonster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cookiemonster.js",
+  "scripts": {
+    "test": "cmTest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaron-goshine/cookiemonster.git"
+  },
+  "keywords": [
+    "cookie",
+    "localstorage"
+  ],
+  "author": "Aaron goshine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aaron-goshine/cookiemonster/issues"
+  },
+  "homepage": "https://github.com/aaron-goshine/cookiemonster#readme"
+}
