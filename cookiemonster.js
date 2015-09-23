@@ -5,7 +5,7 @@
 
 var cookieMonStore = (function () {
     "use strict";
-    if (!document.cookie) {
+    if (!navigator.cookieEnabled) {
         return false;
     }
     var ckMon = new Function();
@@ -19,8 +19,10 @@ var cookieMonStore = (function () {
             }
         }
     };
-    var trim = function (str) {
-        return str.replace(/\s/gi, '');
+    var trim = function (value) {
+        if(!value) return;
+        var value = value.replace(/\s/gi, '')
+        return (!!(Number(value))? Number(value) : value );
     };
 
     ckMon.fn = ckMon.prototype;
@@ -32,8 +34,9 @@ var cookieMonStore = (function () {
      */
     ckMon.fn.set = function (name, value, days) {
         var expires;
-        if (days) {
-            var date = new Date();
+        var date = new Date();
+
+        if (days >= 1) {
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toGMTString();
         }
@@ -66,8 +69,7 @@ var cookieMonStore = (function () {
      * @param {String} name
      */
     ckMon.fn.delete = function (name) {
-        this.set(name, "", -1);
-        _generateHash();
+        this.set(name,"",null);
     };
 
     _generateHash();

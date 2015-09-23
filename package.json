@@ -19,5 +19,7 @@
   "bugs": {
     "url": "https://github.com/aaron-goshine/cookiemonster/issues"
   },
-  "homepage": "https://github.com/aaron-goshine/cookiemonster#readme"
+  "homepage": "https://github.com/aaron-goshine/cookiemonster#readme",
+  "devDependencies": {
+  }
 }
