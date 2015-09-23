@@ -5,12 +5,11 @@
 describe("Cookie-bake-off", function() {
 
     var testHash = {
-        test_anonymous_id: "%22eb131123-f9cf-4916-b708-4c35093e6364%22",
+        test_anonymous_id: "eb131123-f9cf-4916-b708-4c35093e6364",
         test_user_id: 372323,
         test_group_id: null,
         test_token: "5wEDbvlBaJuyOF9VqJ3WIjCbvwGTlRI5"
-    }
-
+    };
 
     beforeEach(function() {
         for(var t in testHash){

@@ -11,18 +11,14 @@ var cookieMonStore = (function () {
     var ckMon = new Function();
     var _hash = {};
     var _generateHash = function () {
-        var cookieString = document.cookie.split(';');
-        for (var i = 0; i < cookieString.length; i++) {
-            if (cookieString.indexOf("=")) {
-                var pair = cookieString[i].split("=");
-                _hash[trim(pair[0])] = trim(pair[1]);
-            }
-        }
-    };
-    var trim = function (value) {
-        if(!value) return;
-        var value = value.replace(/\s/gi, '')
-        return (!!(Number(value))? Number(value) : value );
+        var cookieKeyValues = document.cookie.split('; ');
+      for (var i = 0; i < cookieKeyValues.length; i++) {
+        var cookieKeyValue = cookieKeyValues[i];
+        var pos = cookieKeyValue.indexOf("=");
+        var name = cookieKeyValue.substring(0, pos);
+        var value = cookieKeyValue.substring(pos + 1);
+        _hash[name] = decodeURIComponent(value);
+      }
     };
 
     ckMon.fn = ckMon.prototype;
@@ -33,18 +29,14 @@ var cookieMonStore = (function () {
      * @param  {Number} days
      */
     ckMon.fn.set = function (name, value, days) {
-        var expires;
-        var date = new Date();
+        var expires = "", date = new Date();
 
         if (days >= 1) {
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toGMTString();
         }
-        else {
-            expires = "";
-        }
 
-        document.cookie = trim(name) + "=" + (value) + expires + "; path=/";
+        document.cookie = name + "=" + value + expires + "; path=/";
         _generateHash();
     };
 
