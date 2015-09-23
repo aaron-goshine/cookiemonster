@@ -1,41 +1,62 @@
 /**
-Gio
- TODO : Add support for local storage
+ Aaron Goshine
+ https://github.com/aaron-goshine/cookiemonster
  */
-var cookieMonStore = (function() {
+
+var cookieMonStore = (function () {
     "use strict";
-    var CookieMonStore = new Function();
+    if (!document.cookie) {
+        return false;
+    }
 
-    CookieMonStore.fn = CookieMonStore.prototype;
-
-    CookieMonStore.fn.setCookie = function(name, value, days) {
-	if (days) {
-	    var date = new Date();
-	    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-	    var expires = "; expires=" + date.toGMTString();
-	}
-	else
-	    var expires = "";
-	document.cookie = name + "=" + value + expires + "; path=/";
+    var ckMon = new Function();
+    var _hash = {};
+    var _generateHash = function(){
+        var cookieString = document.cookie.split(';');
+        for (var i = 0; i < cookieString.length; i++) {
+            if (cookieString.indexOf("=")) {
+                var pair = cookieString[i].split("=");
+                _hash[trim(pair[0])] = trim (pair[1]);
+            }
+        }
+    };
+    var trim = function(str){
+        return str.replace(/\s/gi,'');
     };
 
-    CookieMonStore.fn.getCookie = function(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
-	for (var i = 0; i < ca.length; i++) {
-	    var c = ca[i];
-	    while (c.charAt(0) == ' ')
-		c = c.substring(1, c.length);
-	    if (c.indexOf(nameEQ) == 0)
-		return c.substring(nameEQ.length, c.length);
-	}
-	return null;
-    };
- 
-    CookieMonStore.fn.deleteCookie = function(name) {
-	this.setCookie(name, "", -1);
+    ckMon.fn = ckMon.prototype;
+    ckMon.fn.set = function (name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        else {
+            expires = "";
+        }
+
+        document.cookie = trim(name) + "=" + (value) + expires + "; path=/";
+        _generateHash();
     };
 
-    return new CookieMonStore();
+    ckMon.fn.get = function (name) {
+        return _hash[name] || null;
+    };
+
+    ckMon.fn.getHash = function(){
+        _generateHash();
+        return _hash;
+    };
+
+    ckMon.fn.delete = function (name) {
+        this.set(name, "", -1);
+        _generateHash();
+    };
+
+    _generateHash();
+
+    return new ckMon();
 
 }());
+
