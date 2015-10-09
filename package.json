@@ -4,7 +4,7 @@
   "description": "",
   "main": "cookiemonster.js",
   "scripts": {
-    "test": "cmTest"
+    "test": "karma start karm.config.js"
   },
   "repository": {
     "type": "git",
